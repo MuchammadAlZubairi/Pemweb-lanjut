@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Rating from "../shared/Rating";
 import ReviewList from "../shared/ReviewList";
+import ReviewForm from "./ReviewForm";
 import { useAuth } from "../../context/AuthContext";
 
 const ProductDetail = () => {

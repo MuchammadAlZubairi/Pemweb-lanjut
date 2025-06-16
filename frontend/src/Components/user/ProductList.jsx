@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { StarIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Pagination from "../shared/Pagination";
 import SearchBox from "../shared/SearchBox";
+import { useAuth } from "../../context/AuthContext";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
