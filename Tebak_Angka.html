@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tebak Angka</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .game-container {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            width: 100px;
+            text-align: center;
+            margin: 10px 0;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #message {
+            margin: 20px 0;
+            font-size: 18px;
+            min-height: 27px;
+        }
+        .success {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .error {
+            color: #e74c3c;
+        }
+        .info {
+            color: #f39c12;
+        }
+        #attempts {
+            font-weight: bold;
+            color: #9b59b6;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Tebak Angka</h1>
+        <p>Saya telah memilih sebuah angka antara 1 sampai 100. Coba tebak!</p>
+        
+        <input type="number" id="guessInput" min="1" max="100" placeholder="Masukkan tebakan">
+        <button onclick="checkGuess()">Tebak</button>
+        
+        <div id="message"></div>
+        <p>Jumlah percobaan: <span id="attempts">0</span></p>
+    </div>
+
+    <script>
+        // Generate angka acak antara 1-100
+        const targetNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+        
+        function checkGuess() {
+            const guessInput = document.getElementById('guessInput');
+            const message = document.getElementById('message');
+            const attemptDisplay = document.getElementById('attempts');
+            
+            const userGuess = parseInt(guessInput.value);
+            
+            // Validasi input
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                message.textContent = "Masukkan angka antara 1 sampai 100!";
+                message.className = "error";
+                return;
+            }
+            
+            attempts++;
+            attemptDisplay.textContent = attempts;
+            
+            if (userGuess === targetNumber) {
+                message.innerHTML = `<span class="success">Jawaban benar!</span> Anda membutuhkan ${attempts} kali percobaan untuk menebaknya!`;
+                message.className = "success";
+                guessInput.disabled = true;
+            } else if (userGuess < targetNumber) {
+                message.textContent = "Jawaban salah, angkanya terlalu kecil, masukkan angka lain!";
+                message.className = "info";
+            } else {
+                message.textContent = "Jawaban salah, angkanya terlalu besar, masukkan angka lain!";
+                message.className = "info";
+            }
+            
+            guessInput.value = '';
+            guessInput.focus();
+        }
+        
+        // Memungkinkan tekan Enter untuk menebak
+        document.getElementById('guessInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkGuess();
+            }
+        });
+    </script>
+</body>
+</html>
